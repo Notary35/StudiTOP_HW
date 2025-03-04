@@ -4,18 +4,14 @@ import json
 import csv
 
 
-# №1
-# Запись в JSON
-
+# Запись в JSON:
 
 def write_json(*data: dict, file_name="test.json", encoding: str = "utf-8"):
     with open(file_name, "w", encoding=encoding) as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
-# №2
-# Чтение из JSON
-
+# Чтение из JSON:
 
 def read_json(file_name="test.json", encoding: str = "utf-8"):
     with open(file_name, "r", encoding=encoding) as f:
@@ -23,9 +19,7 @@ def read_json(file_name="test.json", encoding: str = "utf-8"):
     return data
 
 
-# №3
-# Дозапись в JSON
-
+# Дозапись в JSON:
 
 def append_json(data: dict, file_name="test.json", encoding: str = "utf-8"):
 
@@ -39,3 +33,27 @@ def append_json(data: dict, file_name="test.json", encoding: str = "utf-8"):
 
     with open(file_name, "w", encoding=encoding) as f:
         json.dump(current_data, f, ensure_ascii=False, indent=4, sort_keys=False)
+
+
+# Запись в CSV:
+
+def write_csv(*data: list, file_name="test.csv", encoding: str = "utf-8-sig"):
+    with open(file_name, "w", encoding=encoding) as f:
+        writer = csv.writer(f, delimiter=";", lineterminator='\n')
+        writer.writerows(data)
+
+
+# Чтение из CSV:
+
+def read_csv(file_name="test.csv", encoding: str = "utf-8-sig"):
+    with open(file_name, "r", encoding=encoding) as f:
+        data = list(csv.reader(f, delimiter=";"))
+    return data
+
+
+# Дозапись в CSV:
+
+def append_csv(data: list, file_name="test.csv", encoding: str = "utf-8-sig"):
+    with open(file_name, "a", encoding=encoding) as f:
+        writer = csv.writer(f, delimiter=";", lineterminator='\n')
+        writer.writerows(data)
