@@ -136,3 +136,48 @@ append_yaml(data)
 
 pprint.pprint(read_yaml(data), width=40, compact=False, sort_dicts=False)
 print()
+
+
+# Тест записи погодного приложения в YAML:
+
+from files_utils import create_weather_config
+
+weather_app_config = {
+    "app_name": "Weather Forecast App",
+    "version": "2.0",
+    "api_key": "your_api_key_here",
+    "settings": {
+        "default_city": "Moscow",
+        "units": "metric",
+        "language": "ru",
+        "update_interval": 30,
+        "notifications": True,
+    },
+    "display_options": {
+        "show_wind": True,
+        "show_humidity": True,
+        "show_pressure": True,
+        "temperature_format": "celsius",
+    },
+    "supported_features": [
+        "current_weather",
+        "hourly_forecast",
+        "daily_forecast",
+        "weather_alerts",
+        "weather_maps",
+    ],
+    "api_endpoints": {
+        "base_url": "https://api.weather.com",
+        "current": "/current",
+        "forecast": "/forecast",
+        "alerts": "/alerts",
+    },
+}
+
+create_weather_config(weather_app_config)
+
+
+from files_utils import read_weather_config
+
+pprint.pprint(read_weather_config(data), indent=4, sort_dicts=False)
+print()

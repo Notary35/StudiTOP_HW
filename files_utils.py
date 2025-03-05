@@ -119,3 +119,23 @@ def append_yaml(data, file_name="test.yaml", encoding: str = "utf-8"):
         yaml.dump(
             data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
         )
+
+
+# Запишем функцию для создания и чтения погодного приложения в YAML:
+
+
+def create_weather_config(
+    data, file_name="weather_app_config.yaml", encoding: str = "utf-8"
+):
+    with open(file_name, "w", encoding=encoding) as f:
+        yaml.dump(
+            data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
+        )
+
+
+def read_weather_config(
+    data, file_name="weather_app_config.yaml", encoding: str = "utf-8"
+):
+    with open(file_name, "r", encoding=encoding) as f:
+        data = yaml.safe_load(f)
+    return data
