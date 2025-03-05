@@ -1,8 +1,6 @@
 import pprint
 
 
-
-
 # Протестируем функцию записи JSON
 from files_utils import write_json
 
@@ -19,10 +17,10 @@ write_json(*persons)
 
 from files_utils import read_json
 
-# read_json = list(read_json())
 
 pprint.pprint(read_json(), indent=4, sort_dicts=False)
 print()
+
 
 # Протестируем дозапись из JSON и после прочитаем обновлённый словарь
 
@@ -34,6 +32,7 @@ append_json(person)
 
 pprint.pprint(read_json(), indent=4, sort_dicts=False)
 print()
+
 
 # Тест записи в CSV:
 
@@ -52,6 +51,7 @@ car_models = [
 
 write_csv(*car_models)
 
+
 # Тест чтения из CSV:
 
 from files_utils import read_csv
@@ -59,16 +59,44 @@ from files_utils import read_csv
 pprint.pprint(read_csv(), indent=4)
 print()
 
+
 # Тест дозаписи в CSV:
 
 from files_utils import append_csv
 
-car_model = [
-    ["Japan", "Toyota", "Mark II"],
-    ["Japan", "Honda", "Civic"]
-]
+car_model = [["Japan", "Toyota", "Mark II"], ["Japan", "Honda", "Civic"]]
 
-append_csv(car_model)
+append_csv(*car_model)
 
 pprint.pprint(read_csv(), indent=4)
 print()
+
+
+# Тест записи в txt:
+
+from files_utils import write_txt
+
+text = """London is the capital of great Britain.\n"""
+
+write_txt(text)
+
+
+# Тест чтения из txt:
+
+from files_utils import read_txt
+
+print(read_txt())
+print()
+
+
+# Тест дозаписи в txt:
+
+from files_utils import append_txt
+
+text = """Paris is the capital of France."""
+
+append_txt(text)
+
+print(read_txt())
+print()
+

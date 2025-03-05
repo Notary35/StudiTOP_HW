@@ -3,8 +3,11 @@ import yaml
 import json
 import csv
 
+# import pylance
+
 
 # Запись в JSON:
+
 
 def write_json(*data: dict, file_name="test.json", encoding: str = "utf-8"):
     with open(file_name, "w", encoding=encoding) as f:
@@ -13,6 +16,7 @@ def write_json(*data: dict, file_name="test.json", encoding: str = "utf-8"):
 
 # Чтение из JSON:
 
+
 def read_json(file_name="test.json", encoding: str = "utf-8"):
     with open(file_name, "r", encoding=encoding) as f:
         data = json.load(f)
@@ -20,6 +24,7 @@ def read_json(file_name="test.json", encoding: str = "utf-8"):
 
 
 # Дозапись в JSON:
+
 
 def append_json(data: dict, file_name="test.json", encoding: str = "utf-8"):
 
@@ -37,13 +42,15 @@ def append_json(data: dict, file_name="test.json", encoding: str = "utf-8"):
 
 # Запись в CSV:
 
+
 def write_csv(*data: list, file_name="test.csv", encoding: str = "utf-8-sig"):
     with open(file_name, "w", encoding=encoding) as f:
-        writer = csv.writer(f, delimiter=";", lineterminator='\n')
+        writer = csv.writer(f, delimiter=";", lineterminator="\n")
         writer.writerows(data)
 
 
 # Чтение из CSV:
+
 
 def read_csv(file_name="test.csv", encoding: str = "utf-8-sig"):
     with open(file_name, "r", encoding=encoding) as f:
@@ -53,7 +60,35 @@ def read_csv(file_name="test.csv", encoding: str = "utf-8-sig"):
 
 # Дозапись в CSV:
 
-def append_csv(data: list, file_name="test.csv", encoding: str = "utf-8-sig"):
+
+def append_csv(*data: list, file_name="test.csv", encoding: str = "utf-8-sig"):
     with open(file_name, "a", encoding=encoding) as f:
-        writer = csv.writer(f, delimiter=";", lineterminator='\n')
+        writer = csv.writer(f, delimiter=";", lineterminator="\n")
         writer.writerows(data)
+
+
+# Запись в txt:
+
+
+def write_txt(data: str, file_name="test.txt", encoding: str = "utf-8"):
+    with open(file_name, "w", encoding=encoding) as f:
+        f.write(data)
+
+
+# Чтение из txt:
+
+
+def read_txt(file_name="test.txt", encoding: str = "utf-8"):
+    with open(file_name, "r", encoding=encoding) as f:
+        data = f.read()
+    return data
+
+
+# Дозапись в txt:
+
+
+def append_txt(data, file_name="test.txt", encoding: str = "utf-8"):
+    with open(file_name, "a", encoding=encoding) as f:
+        f.write(data)
+
+
