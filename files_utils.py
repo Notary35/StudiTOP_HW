@@ -92,3 +92,30 @@ def append_txt(data, file_name="test.txt", encoding: str = "utf-8"):
         f.write(data)
 
 
+# Запись в YAML:
+
+
+def write_yaml(data, file_name="test.yaml", encoding: str = "utf-8"):
+    with open(file_name, "w", encoding=encoding) as f:
+        yaml.dump(
+            data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
+        )
+
+
+# Чтение в YAML:
+
+
+def read_yaml(data, file_name="test.yaml", encoding: str = "utf-8"):
+    with open(file_name, "r", encoding=encoding) as f:
+        data = yaml.safe_load(f)
+    return data
+
+
+# Дозапись в YAML:
+
+
+def append_yaml(data, file_name="test.yaml", encoding: str = "utf-8"):
+    with open(file_name, "a", encoding=encoding) as f:
+        yaml.dump(
+            data, f, default_flow_style=False, allow_unicode=True, sort_keys=False
+        )

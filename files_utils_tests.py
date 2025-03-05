@@ -100,3 +100,39 @@ append_txt(text)
 print(read_txt())
 print()
 
+
+# Тест записи в YAML:
+
+from files_utils import write_yaml
+
+data = {
+    "app_name": "Мое приложение",
+    "version": "1.0",
+    "admin": "Василий Уткин",
+    "settings": {"theme": "dark", "language": "ru", "notifications": True},
+    "users": ["admin", "moderator", "guest"],
+}
+
+write_yaml(data)
+
+
+# Тест чтения из YAML:
+
+from files_utils import read_yaml
+
+pprint.pprint(read_yaml(data), indent=4, sort_dicts=False)
+print()
+
+
+# Тест дозаписи в YAML:
+
+from files_utils import append_yaml
+
+data = {
+    "extensions": {"name": "Python", "version": "3.10.1", "author": "Michael Jackson"}
+}
+
+append_yaml(data)
+
+pprint.pprint(read_yaml(data), width=40, compact=False, sort_dicts=False)
+print()
