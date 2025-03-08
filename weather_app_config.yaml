@@ -1,0 +1,25 @@
+app_name: Weather Forecast App
+version: '2.0'
+api_key: your_api_key_here
+settings:
+  default_city: Moscow
+  units: metric
+  language: ru
+  update_interval: 30
+  notifications: true
+display_options:
+  show_wind: true
+  show_humidity: true
+  show_pressure: true
+  temperature_format: celsius
+supported_features:
+- current_weather
+- hourly_forecast
+- daily_forecast
+- weather_alerts
+- weather_maps
+api_endpoints:
+  base_url: https://api.weather.com
+  current: /current
+  forecast: /forecast
+  alerts: /alerts
