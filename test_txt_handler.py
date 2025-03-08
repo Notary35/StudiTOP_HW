@@ -24,3 +24,11 @@ new_text = """
 """
 
 handler.append_file("test.txt", new_text)
+
+
+# Тест чтения из файла:
+
+handler.read_file("test.txt")
+result = handler.read_file("test.txt")
+print(type(result))
+print(result)
