@@ -55,3 +55,28 @@ class ImageCompressor:
             elif os.path.isdir(input_path):
                 print(f"Обрабатываем директорию: {input_path}")
                 self.process_directory(input_path)
+    
+    @property
+    def quality(self) -> int:
+        """
+        Получает и возвращает значение качества сжатия изображения.
+        """
+        return self.__quality
+    
+    @quality.setter
+    def quality(self, quality: int) -> None:
+        """
+        Устанавливает качество сжатия изображения.
+        """
+        self.__quality = quality
+    
+                
+if __name__ == "__main__":
+    user_input: str = input("Введите путь к файлу или директории: ")
+    percent = int(input("Введите качество сжатия в процентах: "))
+    if percent >= 1 and percent <= 100:
+        compressor = ImageCompressor(quality = percent)
+        compressor.main(user_input)
+    else:
+        print("Качество сжатия должно быть от 1 до 100")
+    # От себя добавил)))
