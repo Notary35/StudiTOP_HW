@@ -125,3 +125,51 @@ class JsonFile(AbstractFile):
             print(f"Произошла ошибка при чтении файла: {e}")
             return []
 
+
+class CsvFile(AbstractFile):
+    def __init__(self, file_path: str) -> None:
+        super().__init__(file_path)
+
+    def write_file(self, data: list, encoding="utf-8-sig"):
+        """
+        Метод для записи данных в CSV файл.
+        Записывает список словарей
+        """
+        try:
+            with open(self.file_path, "w", encoding=encoding) as file:
+                csv_dict = csv.DictWriter(
+                    file, fieldnames=data[0].keys(), delimiter=";", lineterminator="\n"
+                )
+                csv_dict.writeheader()
+                csv_dict.writerows(data)
+        except Exception as e:
+            print(f"Произошла ошибка при записи файла: {e}")
+
+    def append_file(self, data: list, encoding="utf-8-sig"):
+        """
+        Метод для дозаписи данных в CSV файл.
+        Дозаписывает список словарей
+        """
+        try:
+            with open(self.file_path, "a", encoding=encoding) as file:
+                csv_dict = csv.DictWriter(
+                    file, fieldnames=data[0].keys(), delimiter=";", lineterminator="\n"
+                )
+                csv_dict.writerows(data)
+        except Exception as e:
+            print(f"Произошла ошибка при записи файла: {e}")
+
+    def read_file(self, encoding="utf-8-sig"):
+        """
+        Метод для чтения данных из CSV файла.
+        """
+        try:
+            with open(self.file_path, "r", encoding=encoding) as file:
+                reader = csv.DictReader(file, delimiter=";")
+                csv_list = list(reader)
+                return csv_list
+        except FileNotFoundError:
+            return []
+        except Exception as e:
+            print(f"Произошла ошибка при чтении файла: {e}")
+            return []
