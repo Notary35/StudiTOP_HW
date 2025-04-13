@@ -112,3 +112,29 @@ class CityGame:
             if not is_bad_letter(letter):
                 return letter.lower()
         return None
+
+
+class GameManager:
+    def __init__(self, cities_file_path: str):
+        self.json_file = JsonFile(cities_file_path)
+        city_data = self.json_file.read_data()
+        if city_data is None:
+            raise ValueError("Данные о городах отсутствуют.")
+        self.cities_serializer = CitiesSerializer(city_data)
+        self.city_game = CityGame(self.cities_serializer.get_all_cities())
+
+    def run_game(self):
+        """Я сказала 'Стартуем' - Наталья Морская Пехота"""
+        self.city_game.start_game()
+        while True:
+            city_name = input("Введите название города или 'выход' для завершения игры: ")
+            if city_name.lower() == "выход":
+                print("Игра завершена.")
+                break
+            self.city_game.human_turn(city_name)
+
+
+if __name__ == "__main__":
+    cities_file_path = "cities.json"
+    game_manager = GameManager(cities_file_path)
+    game_manager.run_game()
