@@ -20,3 +20,22 @@ class JsonFile:
             print(f"Ошибка декодирования JSON в файле {self.file_path}.")
             return None
 
+
+@dataclass
+class City:
+    name: str
+    population: int
+    subject: str
+    district: str
+    latitude: float
+    longitude: float
+    is_used: bool = False
+
+
+bad_letters = {"ь", "ъ", "ы"}
+
+
+def is_bad_letter(letter: str) -> bool:
+    return letter in bad_letters
+
+
