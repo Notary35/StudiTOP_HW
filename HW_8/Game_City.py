@@ -39,3 +39,20 @@ def is_bad_letter(letter: str) -> bool:
     return letter in bad_letters
 
 
+class CitiesSerializer:
+    def __init__(self, city_data: List[dict]):
+        self.cities = [
+            City(
+                name=city["name"],
+                population=city["population"],
+                subject=city["subject"],
+                district=city["district"],
+                latitude=float(city["coords"]["lat"]),
+                longitude=float(city["coords"]["lon"]),
+                is_used=False
+            )
+            for city in city_data
+        ]
+
+    def get_all_cities(self) -> List[City]:
+        return self.cities
