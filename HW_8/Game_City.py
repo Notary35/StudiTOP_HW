@@ -56,3 +56,59 @@ class CitiesSerializer:
 
     def get_all_cities(self) -> List[City]:
         return self.cities
+
+
+class CityGame:
+    def __init__(self, cities: List[City]):
+        self.cities = cities
+        self.used_cities = []
+        self.current_letter = None
+
+    def start_game(self):
+        print("Игра началась!")
+        available_cities = [city for city in self.cities if not city.is_used]
+        if available_cities:
+            first_city = random.choice(available_cities)
+            self.mark_city_as_used(first_city.name)
+            self.current_letter = self.get_last_valid_letter(first_city.name)
+            print(f"Компьютер назвал город: {first_city.name}. Следующая буква: {self.current_letter}")
+        else:
+            print("Нет доступных городов для начала игры.")
+
+    def human_turn(self, city_name: str):
+        city_name = city_name.title()
+        if not self.is_valid_city(city_name):
+            print(f"Город {city_name} не найден или уже использован.")
+            return
+        self.mark_city_as_used(city_name)
+        self.current_letter = self.get_last_valid_letter(city_name)
+        print(f"Вы назвали город: {city_name}. Следующая буква: {self.current_letter}")
+        self.computer_turn()
+
+    def computer_turn(self):
+        for city in self.cities:
+            if not city.is_used and self.current_letter and city.name.lower().startswith(self.current_letter):
+                self.mark_city_as_used(city.name)
+                self.current_letter = self.get_last_valid_letter(city.name)
+                print(f"Компьютер назвал город: {city.name}. Следующая буква: {self.current_letter}")
+                return
+        print("Компьютер не смог найти город. Вы победили!")
+
+    def is_valid_city(self, city_name: str) -> bool:
+        for city in self.cities:
+            if city.name == city_name and not city.is_used:
+                return True
+        return False
+
+    def mark_city_as_used(self, city_name: str):
+        for city in self.cities:
+            if city.name == city_name:
+                city.is_used = True
+                self.used_cities.append(city_name)
+                break
+
+    def get_last_valid_letter(self, city_name: str) -> str:
+        for letter in reversed(city_name):
+            if not is_bad_letter(letter):
+                return letter.lower()
+        return None
