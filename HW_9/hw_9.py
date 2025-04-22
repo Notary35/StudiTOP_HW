@@ -35,3 +35,12 @@ unique_directors: Set[str] = {film["director"] for film in result_dict.values()}
 print("Результат задания №4: Уникальные режиссеры")
 pprint(unique_directors)
 print()
+
+# №5
+full_dict_copy: Dict[Any, Dict[str, Any]] = {
+    key: {**value, "year": str(value["year"])} for key, value in full_dict.items()
+}
+
+print("Результат задания №5: Копия словаря с преобразованным 'year' в строку")
+pprint(full_dict_copy, sort_dicts=False)
+print()
