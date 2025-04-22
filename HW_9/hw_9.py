@@ -98,3 +98,20 @@ sorted_set3: Dict[Any, Dict[str, Any]] = dict(
 print("Результат задания №8: Фильмы, отсортированные по фазам и году от меньшего к большему")
 pprint(sorted_set3, sort_dicts=False)
 print()
+
+# №9
+sorted_set4: Dict[Any, Dict[str, Any]] = dict(
+    sorted(
+        filter(
+            lambda film: film[1].get("title") and "мстители" in film[1]["title"].lower(),
+            full_dict.items(),
+        ),
+        key=lambda film: (stage_list.get(film[1].get("stage", ""), 0), film[1].get("title")),
+    )
+)
+
+print("Результат задания №9: Фильмы с 'Мстителями' в названии, отсортированные по фазам")
+pprint(sorted_set4, sort_dicts=False)
+print()
+
+# №10 Проверка mypy пройдена успешно.
