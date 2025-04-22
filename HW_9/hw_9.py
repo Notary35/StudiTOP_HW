@@ -12,3 +12,19 @@ def user_inp(value: str):
     return int(value)
 
 user_list: List[Union[int, None]] = list(map(user_inp, user_num.split()))
+
+# №3
+simple_list: List[Dict[str, Any]] = []
+
+for index, film in full_dict.items():
+    simple_list.append({"id": index, **film})
+
+simple_list = sorted(simple_list, key=lambda film: film["id"])
+
+result_list: List[Dict[str, Any]] = list(filter(lambda film: film["id"] in user_list, simple_list))
+
+result_dict: Dict[int, Dict[str, Any]] = {film["id"]: film for film in result_list}
+
+print("Результат задания №3: Словарь с исходными id и другими ключами для фильмов из списка")
+pprint(result_dict, sort_dicts=False)
+print()
