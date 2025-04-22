@@ -53,3 +53,20 @@ sorted_set: Dict[Any, Dict[str, Any]] = dict(
 print("Результат задания №6: Фильмы, начинающиеся на 'Ч'")
 pprint(sorted_set, sort_dicts=False)
 print()
+
+# №7
+sorted_set2: Dict[Any, Dict[str, Any]] = dict(
+    sorted(
+        full_dict.items(),
+        key=lambda film: (
+            int(film[1].get("year", 0))
+            if isinstance(film[1].get("year"), int) or str(film[1].get("year")).isdigit()
+            else 0
+        ),
+        reverse=True,
+    )
+)
+
+print("Результат задания №7: Фильмы, отсортированные по году от большего к меньшему")
+pprint(sorted_set2, sort_dicts=False)
+print()
