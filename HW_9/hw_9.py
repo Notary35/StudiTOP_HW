@@ -70,3 +70,31 @@ sorted_set2: Dict[Any, Dict[str, Any]] = dict(
 print("Результат задания №7: Фильмы, отсортированные по году от большего к меньшему")
 pprint(sorted_set2, sort_dicts=False)
 print()
+
+# №8
+stage_list: Dict[str, int] = {
+    "Первая фаза": 1,
+    "Вторая фаза": 2,
+    "Третья фаза": 3,
+    "Четвёртая фаза": 4,
+    "Пятая фаза": 5,
+    "Шестая фаза": 6,
+}
+
+sorted_set3: Dict[Any, Dict[str, Any]] = dict(
+    sorted(
+        full_dict.items(),
+        key=lambda film: (
+            (
+                int(film[1].get("year", float("inf")))
+                if isinstance(film[1].get("year"), int) or str(film[1].get("year")).isdigit()
+                else float("inf")
+            ),
+            stage_list.get(film[1].get("stage", ""), float("inf")),
+        ),
+    )
+)
+
+print("Результат задания №8: Фильмы, отсортированные по фазам и году от меньшего к большему")
+pprint(sorted_set3, sort_dicts=False)
+print()
