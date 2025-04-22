@@ -49,7 +49,7 @@ class CitiesSerializer:
                 district=city["district"],
                 latitude=float(city["coords"]["lat"]),
                 longitude=float(city["coords"]["lon"]),
-                is_used=False
+                is_used=False,
             )
             for city in city_data
         ]
@@ -71,7 +71,9 @@ class CityGame:
             first_city = random.choice(available_cities)
             self.mark_city_as_used(first_city.name)
             self.current_letter = self.get_last_valid_letter(first_city.name)
-            print(f"Компьютер назвал город: {first_city.name}. Следующая буква: {self.current_letter}")
+            print(
+                f"Компьютер назвал город: {first_city.name}. Следующая буква: {self.current_letter}"
+            )
         else:
             print("Нет доступных городов для начала игры.")
 
@@ -87,10 +89,16 @@ class CityGame:
 
     def computer_turn(self):
         for city in self.cities:
-            if not city.is_used and self.current_letter and city.name.lower().startswith(self.current_letter):
+            if (
+                not city.is_used
+                and self.current_letter
+                and city.name.lower().startswith(self.current_letter)
+            ):
                 self.mark_city_as_used(city.name)
                 self.current_letter = self.get_last_valid_letter(city.name)
-                print(f"Компьютер назвал город: {city.name}. Следующая буква: {self.current_letter}")
+                print(
+                    f"Компьютер назвал город: {city.name}. Следующая буква: {self.current_letter}"
+                )
                 return
         print("Компьютер не смог найти город. Вы победили!")
 
@@ -127,7 +135,9 @@ class GameManager:
         """Я сказала 'Стартуем' - Наталья Морская Пехота"""
         self.city_game.start_game()
         while True:
-            city_name = input("Введите название города или 'выход' для завершения игры: ")
+            city_name = input(
+                "Введите название города или 'выход' для завершения игры: "
+            )
             if city_name.lower() == "выход":
                 print("Игра завершена.")
                 break
