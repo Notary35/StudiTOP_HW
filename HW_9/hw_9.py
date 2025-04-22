@@ -28,3 +28,10 @@ result_dict: Dict[int, Dict[str, Any]] = {film["id"]: film for film in result_li
 print("Результат задания №3: Словарь с исходными id и другими ключами для фильмов из списка")
 pprint(result_dict, sort_dicts=False)
 print()
+
+# №4
+unique_directors: Set[str] = {film["director"] for film in result_dict.values()}
+
+print("Результат задания №4: Уникальные режиссеры")
+pprint(unique_directors)
+print()
