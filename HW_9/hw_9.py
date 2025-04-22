@@ -44,3 +44,12 @@ full_dict_copy: Dict[Any, Dict[str, Any]] = {
 print("Результат задания №5: Копия словаря с преобразованным 'year' в строку")
 pprint(full_dict_copy, sort_dicts=False)
 print()
+
+# №6
+sorted_set: Dict[Any, Dict[str, Any]] = dict(
+    filter(lambda film: film[1].get("title") and film[1]["title"].lower().startswith("ч"), full_dict.items())
+)
+
+print("Результат задания №6: Фильмы, начинающиеся на 'Ч'")
+pprint(sorted_set, sort_dicts=False)
+print()
