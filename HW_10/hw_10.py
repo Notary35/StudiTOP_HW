@@ -35,17 +35,17 @@ def password_checker(length: int = 8) -> Callable:
         return wrapper
     return decorator
 
-# @password_checker()
-# def register_user(password: str) -> str:
-#     return (f'Пароль "{password}" принят!')
+@password_checker()
+def register_user(password: str) -> str:
+    return (f'Пароль "{password}" принят!')
 
-# while True: # Добавил цикл от себя
-#     user_password = input("Создайте пароль: ")
-#     try:
-#         print(register_user(user_password))
-#         break
-#     except ValueError as e:
-#         print(f"Ошибка:\n{e}\nПовторите попытку\n")
+while True: # Добавил цикл от себя
+    user_password = input("Создайте пароль: ")
+    try:
+        print(register_user(user_password))
+        break
+    except ValueError as e:
+        print(f"Ошибка:\n{e}\nПовторите попытку\n")
 
 # Домашнее задание №10📃
 # Часть 2: Декоратор для валидации электронной почты
@@ -85,18 +85,7 @@ def register_user_name(username: str) -> str:
 def register_user_password(password: str) -> str:
     return (f'Пароль "{password}" принят!')
 
-while True:
-    username = input("Введите имя пользователя: ")
-    try:
-        print(register_user_name(username))
-        break
-    except ValueError as e:
-        print(f"Ошибка:\n{e}\nПовторите ввод имени\n")
+username = input("Введите имя пользователя: ")
+password = input(str("Введите пароль: "))
 
-while True:
-    password = input("Введите пароль: ")
-    try:
-        print(register_user_password(password))
-        break
-    except ValueError as e:
-        print(f"Ошибка:\n{e}\nПовторите ввод пароля\n")
+print(register_user_password(password), register_user_name(username))
