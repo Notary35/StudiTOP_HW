@@ -85,7 +85,18 @@ def register_user_name(username: str) -> str:
 def register_user_password(password: str) -> str:
     return (f'Пароль "{password}" принят!')
 
-username = input("Введите имя пользователя: ")
-password = input(str("Введите пароль: "))
+while True:
+    username = input("Введите имя пользователя: ")
+    try:
+        print(register_user_name(username))
+        break
+    except ValueError as e:
+        print(f"Ошибка:\n{e}\nПовторите ввод имени\n")
 
-print(register_user_password(password), register_user_name(username))
+while True:
+    password = input("Введите пароль: ")
+    try:
+        print(register_user_password(password))
+        break
+    except ValueError as e:
+        print(f"Ошибка:\n{e}\nПовторите ввод пароля\n")
