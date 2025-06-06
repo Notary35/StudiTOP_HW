@@ -35,20 +35,20 @@ def password_checker(length: int = 8) -> Callable:
         return wrapper
     return decorator
 
-@password_checker()
-def register_user(password: str) -> str:
-    return (f'Пароль "{password}" принят!')
+# @password_checker()
+# def register_user(password: str) -> str:
+#     return (f'Пароль "{password}" принят!')
 
-while True: # Добавил цикл от себя
-    user_password = str(input("Создайте пароль: "))
-    try:
-        print(register_user(user_password))
-        break
-    except ValueError as e:
-        print(f"Ошибка:\n{e}\nПовторите попытку\n")
+# while True: # Добавил цикл от себя
+#     user_password = input("Создайте пароль: ")
+#     try:
+#         print(register_user(user_password))
+#         break
+#     except ValueError as e:
+#         print(f"Ошибка:\n{e}\nПовторите попытку\n")
 
 # Домашнее задание №10📃
-## Часть 2: Декоратор для валидации электронной почты
+# Часть 2: Декоратор для валидации электронной почты
 
 def password_validator(length: int = 8, uppercase: int = 1, lowercase: int = 1, special_chars: int = 1):
     def decorator(func: Callable) -> Callable:
@@ -56,5 +56,36 @@ def password_validator(length: int = 8, uppercase: int = 1, lowercase: int = 1, 
             errors = []
             if len(password) < length:
                 errors.append("• Пароль должен быть не менее 8 символов")
-            if any (simbol.isupper() for simbol in password):
-                sum(simbol) < uppercase
+            if sum(1 for simbol in password if simbol.isupper()) < uppercase:
+                errors.append("• Пароль должен содержать хотя-бы одну заглавную букву")
+            if sum(1 for simbol in password if simbol.islower()) < lowercase:
+                errors.append("• Пароль должен содержать хотя-бы одну строчную букву")
+            if sum(1 for simbol in password if simbol in special_symbols_set) < special_chars:
+                special_symbols_list = list(special_symbols_set)
+                errors.append(f"• Пароль должен содержать хотя-бы один спец-символ: ({', '.join(special_symbols_list[:5])}) и т.д.")
+            if errors:
+                raise ValueError("\n".join(errors))
+            return func(password)
+        return wrapper
+    return decorator
+
+def username_validator():
+    def decorator(func: Callable) -> Callable:
+        def wrapper(username: str):
+            if " " in username:
+                raise ValueError("• Имя пользователя не должено содержать пробелы")
+            return func(username)
+        return wrapper
+    return decorator
+
+@username_validator()
+def register_user_name(username: str) -> str:
+    return (f'Имя пользователя "{username}" принято!')
+@password_validator()
+def register_user_password(password: str) -> str:
+    return (f'Пароль "{password}" принят!')
+
+username = input("Введите имя пользователя: ")
+password = input(str("Введите пароль: "))
+
+print(register_user_password(password), register_user_name(username))
