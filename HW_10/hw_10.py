@@ -3,6 +3,7 @@
 ## Часть 1: Декоратор для валидации пароля
 """
 from typing import Callable
+import csv
 
 special_symbols_set = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '-', '=', '~', '`', '{', '}', '[', ']', '|', '\\', ';', ':', "'", '"', '<', '>', ',', '.', '?', '/'}
 
@@ -45,3 +46,15 @@ while True: # Добавил цикл от себя
         break
     except ValueError as e:
         print(f"Ошибка:\n{e}\nПовторите попытку\n")
+
+# Домашнее задание №10📃
+## Часть 2: Декоратор для валидации электронной почты
+
+def password_validator(length: int = 8, uppercase: int = 1, lowercase: int = 1, special_chars: int = 1):
+    def decorator(func: Callable) -> Callable:
+        def wrapper(password: str):
+            errors = []
+            if len(password) < length:
+                errors.append("• Пароль должен быть не менее 8 символов")
+            if any (simbol.isupper() for simbol in password):
+                sum(simbol) < uppercase
