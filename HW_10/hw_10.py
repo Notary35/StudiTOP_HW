@@ -39,13 +39,13 @@ def password_checker(length: int = 8) -> Callable:
 def register_user(password: str) -> str:
     return (f'Пароль "{password}" принят!')
 
-while True: # Добавил цикл от себя
-    user_password = input("Создайте пароль: ")
-    try:
-        print(register_user(user_password))
-        break
-    except ValueError as e:
-        print(f"Ошибка:\n{e}\nПовторите попытку\n")
+# while True: # Добавил цикл от себя
+#     user_password = input("Создайте пароль: ")
+#     try:
+#         print(register_user(user_password))
+#         break
+#     except ValueError as e:
+#         print(f"Ошибка:\n{e}\nПовторите попытку\n")
 
 # Домашнее задание №10📃
 # Часть 2: Декоратор для валидации электронной почты
@@ -73,7 +73,7 @@ def username_validator():
     def decorator(func: Callable) -> Callable:
         def wrapper(username: str):
             if " " in username:
-                raise ValueError("• Имя пользователя не должено содержать пробелы")
+                raise ValueError("• Имя пользователя не должно содержать пробелы")
             return func(username)
         return wrapper
     return decorator
@@ -85,7 +85,19 @@ def register_user_name(username: str) -> str:
 def register_user_password(password: str) -> str:
     return (f'Пароль "{password}" принят!')
 
-username = input("Введите имя пользователя: ")
-password = input(str("Введите пароль: "))
+# Добавляем функцию записи в CSV
+def register_user2(username: str, password: str, file_name = "users.csv"):
+    with open(file_name, "a", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow([username, password])
 
-print(register_user_password(password), register_user_name(username))
+while True:
+    username = input("Введите имя пользователя: ")
+    password = input(str("Введите пароль: "))
+    try:
+        print(register_user_password(password), register_user_name(username))
+        register_user2(username, password)
+        print(f'Пользователь "{username}" зарегистрирован!')
+        break
+    except ValueError as e:
+        print(f"Ошибка:\n{e}\nПовторите попытку\n")
