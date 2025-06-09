@@ -98,3 +98,5 @@ while True:
         break
     except ValueError as e:
         print(f"Ошибка:\n{e}\nПовторите попытку\n")
+
+# Тест mypy пройден успешно
