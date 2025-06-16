@@ -28,12 +28,33 @@ class CitiesIterator:
         if 'lat' not in city_dict['coords'] or 'lon' not in city_dict['coords']:
             raise ValueError(f"В пункте 'coords' должны быть подпункты 'lat' и 'lon': {city_dict['name']}")
 
-
+    def _prepare_cities(self) -> None:
+        self._cities: List[City] = []
+        for city_dict in self._original_data:
+            self._validate_city_dict(city_dict)
+            city = City(
+                name = city_dict['name'],
+                lat = float(city_dict['coords']['lat']),
+                lon = float(city_dict['coords']['lon']),
+                district = city_dict['district'],
+                population = int(city_dict['population']),
+                subject = city_dict['subject']
+            )
+            if self._min_population is None or city.population >= self._min_population:
+                self._cities.append(city)
+        if self._sort_by:
+            self._cities.sort(key=lambda city: getattr(city, self._sort_by), reverse=self._reverse)
+            
+    def set_population_filter(self, min_population: int) -> None:
+        self._min_population = min_population
+        self._prepare_cities()
+        
     def sort_by(self, parametr: str, reverse: bool = False) -> None:
         if not hasattr(City, parametr):
             raise ValueError(f"Некорректный параметр {parametr}")
         self._sort_by = parametr
         self._reverse = reverse
+        self._prepare_cities()
 
     def __next__(self) -> City:
         if self._index >= len(self._cities):
