@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Any, Iterator, Optional
-import json
 
 
 @dataclass
@@ -13,7 +12,9 @@ class City:
     subject: str
 
 class CitiesIterator:
-    
+    """
+    Итератор для обработки списка городов с фильтрацией и сортировкой.
+    """
     def __init__(self, cities: List[Dict[str, Any]]):
         self._original_data = cities
         self._min_population: Optional[int] = None
@@ -22,6 +23,9 @@ class CitiesIterator:
         self._index = 0
 
     def _validate_city_dict(self, city_dict: Dict[str, Any]):
+        """
+        Проверяем наличие всех обязательных полей
+        """
         required_fields = ["name", "district", "population", "subject", "coords"]
         for field in required_fields:
             if field not in city_dict:
@@ -30,6 +34,9 @@ class CitiesIterator:
             raise ValueError(f"В пункте 'coords' должны быть подпункты 'lat' и 'lon': {city_dict['name']}")
 
     def _prepare_cities(self) -> None:
+        """
+        Преобразуем список городов в список объектоа City
+        """
         self._cities: List[City] = []
         for city_dict in self._original_data:
             self._validate_city_dict(city_dict)
@@ -47,10 +54,16 @@ class CitiesIterator:
             self._cities.sort(key=lambda city: getattr(city, self._sort_by), reverse=self._reverse)
             
     def set_population_filter(self, min_population: int) -> None:
+        """
+        Фильтр минимального населения
+        """
         self._min_population = min_population
         self._prepare_cities()
         
     def sort_by(self, parametr: str, reverse: bool = False) -> None:
+        """
+        Сортировка по параметрам
+        """
         if parametr not in City.__dataclass_fields__:
             raise ValueError(f"Некорректный параметр сортировки: {parametr}")
         self._sort_by = parametr
@@ -58,16 +71,23 @@ class CitiesIterator:
         self._prepare_cities()
 
     def __iter__(self) -> Iterator[City]:
+        """
+        Итератор списка
+        """
         self._index = 0
         return self
 
     def __next__(self) -> City:
+        """
+        Возвращает следующий город из списка.
+        """
         if self._index >= len(self._cities):
             raise StopIteration
         city = self._cities[self._index]
         self._index += 1
         return city
 
+# Тест
 cities_list = [
     {
         "coords": {"lat": "52.65", "lon": "90.08333"},
