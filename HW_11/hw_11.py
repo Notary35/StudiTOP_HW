@@ -62,3 +62,26 @@ class CitiesIterator:
         city = self._cities[self._index]
         self._index += 1
         return city
+
+cities_list = [
+    {
+        "coords": {"lat": "52.65", "lon": "90.08333"},
+        "district": "Сибирский",
+        "name": "Абаза",
+        "population": 14816,
+        "subject": "Хакасия"
+    },
+    {
+        "coords": {"lat": "55.75", "lon": "37.61667"},
+        "district": "Центральный",
+        "name": "Москва",
+        "population": 12615882,
+        "subject": "Москва"
+    }
+]
+
+cities_iterator = CitiesIterator(cities_list)
+cities_iterator.set_population_filter(15000)
+cities_iterator.sort_by("name")
+for city in cities_iterator:
+    print(city)
