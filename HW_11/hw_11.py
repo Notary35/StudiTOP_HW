@@ -13,6 +13,7 @@ class City:
     subject: str
 
 class CitiesIterator:
+    
     def __init__(self, cities: List[Dict[str, Any]]):
         self._original_data = cities
         self._min_population: Optional[int] = None
@@ -50,11 +51,15 @@ class CitiesIterator:
         self._prepare_cities()
         
     def sort_by(self, parametr: str, reverse: bool = False) -> None:
-        if not hasattr(City, parametr):
-            raise ValueError(f"Некорректный параметр {parametr}")
+        if parametr not in City.__dataclass_fields__:
+            raise ValueError(f"Некорректный параметр сортировки: {parametr}")
         self._sort_by = parametr
         self._reverse = reverse
         self._prepare_cities()
+
+    def __iter__(self) -> Iterator[City]:
+        self._index = 0
+        return self
 
     def __next__(self) -> City:
         if self._index >= len(self._cities):
@@ -79,9 +84,13 @@ cities_list = [
         "subject": "Москва"
     }
 ]
+def main():
+    cities_iterator = CitiesIterator(cities_list)
+    cities_iterator.set_population_filter(10000)
+    cities_iterator.sort_by("name")
 
-cities_iterator = CitiesIterator(cities_list)
-cities_iterator.set_population_filter(15000)
-cities_iterator.sort_by("name")
-for city in cities_iterator:
-    print(city)
+    for i in range(2):
+        print(next(cities_iterator))
+
+if __name__ == "__main__":
+    main()
